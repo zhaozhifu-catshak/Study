@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>印有为云打印后台管理系统</title>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<link rel="stylesheet" type="text/css" href="css/demo.css" />
+	<!--必要样式-->
+	<link rel="stylesheet" type="text/css" href="css/component.css" />
+	<!--[if IE]>
+<script src="js/html5.js"></script>
+<![endif]-->
+</head>
+
+<body>
+	<div class="container demo-1">
+		<div class="content">
+			<div id="large-header" class="large-header">
+				<canvas id="demo-canvas"></canvas>
+				<div class="logo_box">
+					<h3>修改密码</h3>
+					<form action="#" name="f" method="post">
+						<div class="input_outer">
+							<span class="u_user"></span>
+							<input name="logname" class="text" style="color: #FFFFFF !important" type="text"
+								placeholder="请输入手机号">
+						</div>
+						<div class="input_outer">
+							<span class="us_uer"></span>
+							<input name="logpass" class="text"
+								style="color: #FFFFFF !important; position:absolute; z-index:100;" value=""
+								type="password" placeholder="请输入密码">
+						</div>
+						<div class="input_outer">
+							<span class="us_uer"></span>
+							<input name="logpass2" class="text"
+								style="color: #FFFFFF !important; position:absolute; z-index:100;" value=""
+								type="password" placeholder="请确认密码">
+						</div>
+						<div class="input_outer_ucode">
+							<span class="us_ucode"></span>
+
+							<input name="ucode" type="text" class="text_code"
+								style="color: #FFFFFF !important; position:absolute; z-index:100;" placeholder="手机验证码"
+								id="regist_vcode" />
+							<input  type="button" class="text_code_right" style="color: #FFFFFF !important; position:absolute;left:55%; z-index:100;" value="点击发送验证码"
+								onclick="sendCode(this)" />
+						</div>
+
+						<div class="mb2"><a class="act-but submit" href="javascript:;" style="color: #FFFFFF">修改密码</a>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div><!-- /container -->
+	<script src="js/TweenLite.min.js"></script>
+	<script src="js/EasePack.min.js"></script>
+	<script src="js/rAF.js"></script>
+	<script src="js/demo-1.js"></script>
+	<script type="text/javascript">
+		//验证登录
+	$(document).ready(function() {	
+		$("input[type='text'],input[type='password']").blur(function() {
+			var $el = $(this);
+			var inputname=0;
+			var $parent = $el.parent();
+			$parent.attr('class', 'frame_style').removeClass(' form_error');
+			if($el.val() == '') {
+				var name=$el.attr("data-name");
+				$parent.attr('class', 'frame_style').addClass(' form_error form_prompt');
+				$parent.find('i').eq(inputname).html(name+"不能为空").addClass("prompt");
+			}
+		});
+		$("input[type='text'],input[type='password']").focus(function() {
+			var $el = $(this);
+			var $parent = $el.parent();
+			if($el.val() == '') {
+				$parent.attr('class', 'frame_style').addClass(' form_errors');
+			} else {
+				$parent.attr('class', 'frame_style').removeClass(' form_errors');
+			}
+		});
+	  $('#login_btn').on('click', function() {
+		var num = 0;
+		var str = "";
+		$("input[type$='text'],input[type$='password']").each(function(n) {
+			var $el = $(this);		
+			var inputname=0;
+			var $parent = $el.parent();
+			if($el.val() == "") {
+				var name=$el.attr("data-name");
+				$parent.attr('class', 'frame_style').addClass(' form_error form_prompt');
+                 $parent.find('i').eq(inputname).html(name+"不能为空").addClass("prompt");
+				num++;
+				return false;
+			}
+		});
+		if(num > 0) {
+			return false;
+		} else {
+			//ajax 判断用户名是否存在
+			location.href = "index.html";
+		}
+	});
+	})
+		var clock = '';
+		var nums = 60;
+		var btn;
+		function sendCode(thisBtn) {
+			btn = thisBtn;
+			btn.disabled = true; //将按钮置为不可点击
+			btn.value = '重新获取（'+nums+'）';
+			clock = setInterval(doLoop, 1000); //一秒执行一次
+		}
+	
+		function doLoop() {
+			nums--;
+			if (nums > 0) {
+				btn.value = '重新获取（'+nums+'）';
+			} else {
+				clearInterval(clock); //清除js定时器
+				btn.disabled = false;
+				btn.value = '点击发送验证码';
+				nums = 10; //重置时间
+			}
+		}
+		
+		$(document).ready(function(){
+			$("#login_QQ").click(function(){
+				alert("暂停使用！");
+			});
+			$("#login_WB").click(function(){
+				alert("暂停使用！");
+			});
+		});
+	</script>
+	<div style="text-align:center;">
+	</div>
+</body>
+
+</html>
